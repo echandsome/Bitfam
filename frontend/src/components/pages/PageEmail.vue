@@ -35,55 +35,56 @@
     </b-col>
   </b-row>
 </template>
+
 <script>
-import UiFormInput from "../ui/UiFormInput.vue";
-export default {
-  data: function () {
-    return {
-      email: "",
-      password: "",
-      errors: {},
-    };
-  },
-  mounted() {
-    this.loadUser();
-  },
-  components: {
-    UiFormInput,
-  },
-  methods: {
-    loadUser() {
-      this.$get(
-        "/auth/me",
-        (data) => {
-          this.email = data.email;
-        },
-        (errors) => {
-          console.log(errors);
-        }
-      );
+  import UiFormInput from "../ui/UiFormInput.vue";
+  export default {
+    data: function () {
+      return {
+        email: "",
+        password: "",
+        errors: {},
+      };
     },
-    saveSettings() {
-      this.errors = {};
-      this.$post(
-        "/profile/email",
-        {
-          email: this.email,
-          password: this.password,
-        },
-        () => {
-          this.$bvToast.toast(this.$t("general.settings-saved"), {
-            autoHideDelay: 2000,
-            title: this.$t("general.success"),
-            solid: true,
-            toaster: "b-toaster-bottom-left",
-          });
-        },
-        (errors) => {
-          this.errors = errors;
-        }
-      );
+    mounted() {
+      this.loadUser();
     },
-  },
-};
+    components: {
+      UiFormInput,
+    },
+    methods: {
+      loadUser() {
+        this.$get(
+          "/auth/me",
+          (data) => {
+            this.email = data.email;
+          },
+          (errors) => {
+            console.log(errors);
+          }
+        );
+      },
+      saveSettings() {
+        this.errors = {};
+        this.$post(
+          "/profile/email",
+          {
+            email: this.email,
+            password: this.password,
+          },
+          () => {
+            this.$bvToast.toast(this.$t("general.settings-saved"), {
+              autoHideDelay: 2000,
+              title: this.$t("general.success"),
+              solid: true,
+              toaster: "b-toaster-bottom-left",
+            });
+          },
+          (errors) => {
+            this.errors = errors;
+          }
+        );
+      },
+    },
+  };
 </script>

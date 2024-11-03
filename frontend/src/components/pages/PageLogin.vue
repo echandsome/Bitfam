@@ -73,75 +73,75 @@
 }
 </style>
 <script>
-import GoogleLogin from "vue-google-login";
-import User from "../models/User";
-import UiFormInput from "../ui/UiFormInput.vue";
-export default {
-  components: { UiFormInput, GoogleLogin },
-  data() {
-    return {
-      email: "",
-      password: "",
-      errors: {},
-    };
-  },
-  computed: {
-    google() {
+  import GoogleLogin from "vue-google-login";
+  import User from "../models/User";
+  import UiFormInput from "../ui/UiFormInput.vue";
+  export default {
+    components: { UiFormInput, GoogleLogin },
+    data() {
       return {
-        params: {
-          client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
-          scope: "profile email",
-        },
-        renderParams: {
-          longtitle: true,
-          height: 36,
-          theme: "dark",
-        },
-        icon: require("@/assets/google.svg"),
+        email: "",
+        password: "",
+        errors: {},
       };
     },
-  },
-  methods: {
-    submitForm() {
-      this.login(User.CHANNEL_EMAIL);
+    computed: {
+      google() {
+        return {
+          params: {
+            client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
+            scope: "profile email",
+          },
+          renderParams: {
+            longtitle: true,
+            height: 36,
+            theme: "dark",
+          },
+          icon: require("@/assets/google.svg"),
+        };
+      },
     },
-    googleSuccess(googleUser) {
-      this.login(
-        User.CHANNEL_GOOGLE,
-        googleUser.getAuthResponse().access_token
-      );
-    },
-    login(type, token) {
-      this.errors = {};
-      let fields = {
-        channel_type: type,
-      };
-      if (type == User.CHANNEL_EMAIL) {
-        fields.email = this.email;
-        fields.password = this.password;
-      } else {
-        fields.token = token;
-      }
-      this.$post(
-        "/auth/login",
-        fields,
-        (data) => {
-          this.$saveToken(data.token);
-          this.$saveUser(data.user);
-        },
-        (errors) => {
-          this.errors = errors;
+    methods: {
+      submitForm() {
+        this.login(User.CHANNEL_EMAIL);
+      },
+      googleSuccess(googleUser) {
+        this.login(
+          User.CHANNEL_GOOGLE,
+          googleUser.getAuthResponse().access_token
+        );
+      },
+      login(type, token) {
+        this.errors = {};
+        let fields = {
+          channel_type: type,
+        };
+        if (type == User.CHANNEL_EMAIL) {
+          fields.email = this.email;
+          fields.password = this.password;
+        } else {
+          fields.token = token;
         }
-      );
+        this.$post(
+          "/auth/login",
+          fields,
+          (data) => {
+            this.$saveToken(data.token);
+            this.$saveUser(data.user);
+          },
+          (errors) => {
+            this.errors = errors;
+          }
+        );
+      },
+      failure() {
+        this.$bvToast.toast(this.$t("general.login-failed"), {
+          autoHideDelay: 2000,
+          title: this.$t("general.error"),
+          solid: true,
+          toaster: "b-toaster-bottom-left",
+        });
+      },
     },
-    failure() {
-      this.$bvToast.toast(this.$t("general.login-failed"), {
-        autoHideDelay: 2000,
-        title: this.$t("general.error"),
-        solid: true,
-        toaster: "b-toaster-bottom-left",
-      });
-    },
-  },
-};
+  };
 </script>
