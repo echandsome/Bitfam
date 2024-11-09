@@ -11,6 +11,7 @@ import "@/assets/scss/_theming.scss";
 import i18n from './i18n'
 
 import routes from './components/helpers/Router';
+
 const router = new VueRouter({
   routes,
   mode: 'history'

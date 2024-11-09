@@ -21,6 +21,7 @@
   import Pusher from "pusher-js";
   
   export default {
+    
     components: { UiPhotoSwipe, UiAddToList, UiBuy, UiCookies },
     computed: {
       swiperItems() {
