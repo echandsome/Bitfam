@@ -70,7 +70,6 @@ export default {
       this.$store.state.swiperItems = items;
     }
 
-    
     Vue.prototype.$buyItem = function (data) {
       this.$store.state.buyItem = data;
     }

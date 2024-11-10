@@ -15,6 +15,7 @@
     </b-input-group>
   </b-form>
 </template>
+
 <style scoped lang="scss">
 .form-control {
   border-right: none;
@@ -24,25 +25,26 @@
   border-left: none;
 }
 </style>
+
 <script>
-export default {
-  props: ["value"],
-  computed: {
-    q: {
-      get() {
-        return this.value;
-      },
-      set(val) {
-        this.$emit("input", val);
+  export default {
+    props: ["value"],
+    computed: {
+      q: {
+        get() {
+          return this.value;
+        },
+        set(val) {
+          this.$emit("input", val);
+        },
       },
     },
-  },
-  methods: {
-    search() {
-      if (this.q.length >= 3) {
-        this.$emit("search");
-      }
+    methods: {
+      search() {
+        if (this.q.length >= 3) {
+          this.$emit("search");
+        }
+      },
     },
-  },
-};
+  };
 </script>
