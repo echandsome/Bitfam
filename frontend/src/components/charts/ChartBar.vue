@@ -1,4 +1,5 @@
 <script>
+
   import { Bar, mixins } from "vue-chartjs";
   import "chartjs-plugin-colorschemes/src/plugins/plugin.colorschemes";
   import { Tableau10 } from "chartjs-plugin-colorschemes/src/colorschemes/colorschemes.tableau";

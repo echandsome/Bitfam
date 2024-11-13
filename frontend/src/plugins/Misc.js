@@ -102,6 +102,7 @@ export default {
 
     Vue.prototype.$api = function (method, url, data, success, failure) {
       let headers = {};
+      
       if (this.$store.state.token) {
         headers["Authorization"] = "Bearer " + this.$store.state.token;
       }
